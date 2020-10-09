@@ -7,4 +7,6 @@
 
     //cria a conexão
     $conn = mysqli_connect($server,$user,$pwd,$db) or die('Não foi possivel conectar com o banco de dados!');
+
+    include($conn);
 ?>
