@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	  <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> -->
+	  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> <!-- Fonte -->
+    <!-- JS, Popper.js, and jQuery -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script> <!-- Mascarás -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="LimparCampos.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
+    <script type="text/javascript" src="mascaras.js"></script>
+
+    <!-- SweetAlert2, alerta javascript top -->
+    <link rel="stylesheet" href="node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
+    <script src="node_modules/sweetalert2/dist/sweetalert2.js"></script>
+
+	  <title>Consulta de CEP</title>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="LimparCamposEnder()">
+            Consultar CEP
+        </button>
+    </div>
+  
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg"> <!-- Adicionar o tamanho do modal aqui -->
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Consultar CEP</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+          <form action="action_cliente.php" method="post" id='form-contato' enctype='multipart/form-data'>
+            <div class="row">
+              <div class="col-md-9"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
+                  <div class="form-group">
+                  <label>Nome</label>
+                  <input type="text" class="form-control" id="nome" maxlength="70" name="nome" autofocus="true" placeholder="Nome Completo" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Data Nasc</label>
+                  <input type="date" class="form-control" id="dtnasc" name="dtnasc" style="width: 170px;" required>
+                </div>
+              </div>
+            </div>	
+
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="cboPessoa">Pessoa</label>
+                    <select class="form-control" id="cboPessoa" onchange="mudarCpfCnpj(this.value)">
+                      <option id="cboPessoa-item" value="0"></option>
+                      <option id="cboPessoa-item" value="1">PF</option>
+                      <option id="cboPessoa-item" value="2">PJ</option>                      
+                    </select>                  
+                </div>
+              </div>
+
+              <script type="text/javascript">
+                function mudarCpfCnpj(val){
+                  if(val == 1 ){
+                    document.getElementById('mudarCpfCnpj').label = "CPF";
+                    document.getElementById('mudaRGIE').label = "RG";
+
+                    $('#cpfcnpj').attr({placeholder: "Insira o CPF", maxlenght: "14"}); /* 000.000.000-00 */
+                    $('#rgie').attr({placeholder: "Insira o RG", maxlenght: "13"}); /* Ex: 00.000.000-0 ou -X */
+                    
+                    $("#cpfcnpj").inputmask({mask: ["###.###.###-##",],keepStatic: true});
+                    $("#rgie").inputmask({mask: ["",],keepStatic: true});
+                  }else if (val == 2) {
+                    document.getElementById('mudarCpfCnpj').label = "CNPJ";
+                    document.getElementById('mudaRGIE').label = "IE (Inscrição Estadual)";
+
+                    $('#cpfcnpj').attr({placeholder: "Insira o CNPJ", maxlenght: "18"}); /* Ex: 38.388.388/0000-00 */
+                    $('#rgie').attr({placeholder: "Insira a Inscrição Estadual", maxlenght: "15"}); /* Ex: 388.108.598.269 */
+
+                    $("#cpfcnpj").inputmask({mask: ["##.###.###/####-##",],keepStatic: true});
+                    $("#rgie").inputmask({mask: ["###.###.###.###",],keepStatic: true});
+                  }else{
+                    $('#cpfcnpj').attr({placeholder: "", maxlenght: "18"});
+                    $('#rgie').attr({placeholder: "", maxlenght: "15"}); 
+
+                    $("#cpfcnpj").inputmask({mask: ["",],keepStatic: true});
+                    $("#rgie").inputmask({mask: [""],keepStatic: true});
+                  }
+                }                
+              </script>
+            
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label> <!-- ao inserir o optgroup deve adicionar a tag label e dentro dela colocar a tag optgroup, ele dará uma desconfigurada mas é só mudar o style -->
+                    <optgroup id="mudarCpfCnpj" label="CPF" style="font-weight: 400; font-style: normal;"> <!-- tem que utilizar o optgroup para fazer a label moduar o seu conteúdo -->
+                  </label>
+                    <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" placeholder="" autocomplete="off" style="margin-top: -1px;">
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>
+                    <optgroup id="mudaRGIE" label="RG" style="font-weight: 400; font-style: normal;"></optgroup>
+                  </label>
+                  <input type="text" class="form-control" id="rgie" name="rgie" placeholder="" autocomplete="off" style="margin-top: -1px;">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Tel Contato</label>
+                  <input type="text" class="form-control" id="telcontato" name="telcontato" autocomplete="off" maxlength="50">
+                </div>
+              </div>
+            </div>
+
+            <!-- Adicionar campo telefone -->
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Tel Residencial</label>
+                  <input type="text" class="form-control" id="telres" name="telres" autocomplete="off" maxlength="15">
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Celular</label>
+                  <input type="text" class="form-control" id="celular" autocomplete="off" maxlength="14">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>E-mail</label>
+                  <input type="email" class="form-control" id="email" autocomplete="off" maxlength="170">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-2"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
+                  <div class="form-group">
+                  <label>CEP</label>
+                  <input type="text" class="form-control" id="cep" maxlength="9" name="cep" autofocus="true" placeholder="CEP" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>Endereço <span class="obrigatorio">*</span> <span id='mensagem'></span></label>                    
+                  <input type="text" class="form-control" id="rua" name="rua" placeholder="Informe a Rua, Logradouro, Travessa" autocomplete="off" required>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Número</label>
+                  <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" autocomplete="off">
+                </div>
+              </div>
+            </div>	
+
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Bairro</label>
+                  <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Informe o Bairro">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Cidade</label>
+                  <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Informe a Cidade">
+                </div>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <label>UF</label>
+                  <input type="text" class="form-control" style="width: 50px;" id="uf" maxlength="2" name="uf" placeholder="UF">
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Complemento</label>
+                  <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento do Endereço">
+                </div>
+              </div>
+            </div>
+          </form>
+
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" name="Novo" class="btn btn-warning" onclick="LimparCamposEnder()">Novo</button>
+            <button ype="submit" class="btn btn-primary" id="botao" onclick="valida_form()">Salvar</button>
+          </div>             
+		</div>
+		</div>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+  <script type="text/javascript" src="cep.js"></script> <!-- Chama a função do JavaScript CEP -->
+  <script type="text/javascript" src="LimparCampos.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
+</body>
+</html>

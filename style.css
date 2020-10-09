@@ -1,0 +1,27 @@
+*{
+    font-family: 'Poppins';
+    font-size: small;
+}
+
+body {
+    text-align: center;
+    padding: 1em;
+}
+
+.container{
+    text-align: right;
+}
+
+#exampleModal{
+    /* Alinha o texto ou conteúdo dentro do modal, caso nao colocar isso, ele segue o padrão do body */
+    /* Se o alinhamento do body estiver centralizado, o modal ficará centralizado */
+    text-align: left;
+}
+
+.obrigatorio{ /* se colocar o span ele pega o x do fechar o modal também */
+    color: red;
+}
+
+#cep:focus{
+    -moz-user-focus: true;
+}
