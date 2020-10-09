@@ -31,10 +31,17 @@ Esta função abaixo, ele é ótimo somente com o google chrome, porque nos outr
 ele mostra uma caixa de mensagem e aparece um checkbox para impedir dele ficar exibindo
 */
 function valida_form(){    
-    if(document.getElementById('cboPessoa').value < 1)
+    if (document.getElementById('nome').value.length < 1) 
+    {
+        document.getElementById('nome').focus();
+        Swal.fire('Atenção','O campo nome não pode ficar vázio!', 'warning');
+        return false;
+    }
+    else if(document.getElementById('cboPessoa').value < 1)
     {
         document.getElementById('cboPessoa').focus();
         Swal.fire('Atenção','Por favor, selecione o tipo pessoa!','warning');
+        return false;
     }
     else if(document.getElementById('cep').value.length < 1)
     {
@@ -43,8 +50,8 @@ function valida_form(){
         depois o campo perde o focus() */
         document.getElementById('cep').focus();
         Swal.fire('Atenção',msg, 'info');
-        /* return false;     */
-    }   
+        return false;
+    }
 
     
     

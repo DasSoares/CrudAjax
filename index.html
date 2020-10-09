@@ -20,14 +20,14 @@
     <link rel="stylesheet" href="node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
     <script src="node_modules/sweetalert2/dist/sweetalert2.js"></script>
 
-	  <title>Consulta de CEP</title>
+	  <title>Cadastro</title>
 </head>
 <body>
 
     <div class="container">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="LimparCamposEnder()">
-            Consultar CEP
+            Novo Cadastro
         </button>
     </div>
   
@@ -36,13 +36,13 @@
 		<div class="modal-dialog modal-lg"> <!-- Adicionar o tamanho do modal aqui -->
 		<div class="modal-content">
 			<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Consultar CEP</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Cadastro de Cliente</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 			</div>
 			<div class="modal-body">
-          <form action="action_cliente.php" method="post" id='form-contato' enctype='multipart/form-data'>
+          <form action="cadastro.php" method="POST" id='form-contato' enctype='multipart/form-data'>
             <div class="row">
               <div class="col-md-9"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
                   <div class="form-group">
@@ -62,7 +62,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label for="cboPessoa">Pessoa</label>
-                    <select class="form-control" id="cboPessoa" onchange="mudarCpfCnpj(this.value)">
+                    <select class="form-control" id="cboPessoa" onchange="mudarCpfCnpj(this.value)" name='cboPessoa'>
                       <option id="cboPessoa-item" value="0"></option>
                       <option id="cboPessoa-item" value="1">PF</option>
                       <option id="cboPessoa-item" value="2">PJ</option>                      
@@ -138,14 +138,14 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Celular</label>
-                  <input type="text" class="form-control" id="celular" autocomplete="off" maxlength="14">
+                  <input type="text" class="form-control" id="celular" name="celular" autocomplete="off" maxlength="14">
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="form-group">
                   <label>E-mail</label>
-                  <input type="email" class="form-control" id="email" autocomplete="off" maxlength="170">
+                  <input type="email" class="form-control" id="email" name="email" autocomplete="off" maxlength="170">
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label>Endereço <span class="obrigatorio">*</span> <span id='mensagem'></span></label>                    
-                  <input type="text" class="form-control" id="rua" name="rua" placeholder="Informe a Rua, Logradouro, Travessa" autocomplete="off" required>
+                  <input type="text" class="form-control" id="rua" name="rua" placeholder="Informe a Rua, Logradouro, Travessa" autocomplete="off">
                 </div>
               </div>
               <div class="col-md-2">
@@ -175,25 +175,25 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Bairro</label>
-                  <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Informe o Bairro">
+                  <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Informe o Bairro" autocomplete="off">
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Cidade</label>
-                  <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Informe a Cidade">
+                  <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Informe a Cidade" autocomplete="off">
                 </div>
               </div>
               <div class="col-md-1">
                 <div class="form-group">
                   <label>UF</label>
-                  <input type="text" class="form-control" style="width: 50px;" id="uf" maxlength="2" name="uf" placeholder="UF">
+                  <input type="text" class="form-control" style="width: 50px;" id="uf" name="uf" maxlength="2" name="uf" placeholder="UF">
                 </div>
               </div>
               <div class="col-md-5">
                 <div class="form-group">
                   <label>Complemento</label>
-                  <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento do Endereço">
+                  <input type="text" class="form-control" id="complemento" name="complemento" placeholder="Complemento do Endereço" autocomplete="off">
                 </div>
               </div>
             </div>
