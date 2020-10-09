@@ -42,7 +42,7 @@
 			</button>
 			</div>
 			<div class="modal-body">
-          <form action="cadastro.php" method="POST" id='form-contato' enctype='multipart/form-data'>
+          <form method="POST" action="cadastro.php" id='form-contato' enctype='multipart/form-data'>
             <div class="row">
               <div class="col-md-9"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
                   <div class="form-group">
@@ -201,9 +201,9 @@
 
           </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" name="Novo" class="btn btn-warning" onclick="LimparCamposEnder()">Novo</button>
-            <button ype="submit" class="btn btn-primary" id="botao" onclick="valida_form()">Salvar</button>
+              <button type="button" class="btn btn" data-dismiss="modal" style="color: red;">Cancelar</button>
+              <button type="button" class="btn btn-warning" name="Novo" onclick="LimparCamposEnder()">Novo</button>              
+              <button type="submit" class="btn btn-primary" name="cadastrar" onclick="valida_form()">Cadastrar</button>
           </div>             
 		</div>
 		</div>

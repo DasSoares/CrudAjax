@@ -6,5 +6,5 @@
     $db = "myapplication";
 
     //cria a conexão
-    $coon = mysqli_connect($server,$user,$pwd,$db);
+    $conn = mysqli_connect($server,$user,$pwd,$db) or die('Não foi possivel conectar com o banco de dados!');
 ?>
