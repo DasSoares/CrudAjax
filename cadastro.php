@@ -1,28 +1,24 @@
 <?php
-    session_start();
+    /* session_start(); */
+    include_once('server.php');/* Inicia a conexão com o servidor */   
 
-    include_once('server.php'); 
-    /* $conn = mysqli_connect("127.0.0.1","danilo","123");
-    $db = mysqli_select_db($conn, 'myapplication'); */
-
-    $nome = "";
-    $dtnasc = "";
-    $tipopessoa = "";
-    $cpfcnpj = "";
-    $rgie = "";
-    $telcontato = "";
-    $telresidencial = "";
-    $celular = "";
-    $email = "";
-    $cep = "";
-    $endereco = "";
-    $numero = "";
-    $bairro = "";
-    $cidade = "";
-    $uf = "";
-    $complemento = "";
-    /* $complemento = mysqli_real_escape_string($coon, $_POST['complemento']); */
-
+    $nome;
+    $dtnasc;
+    $tipopessoa;
+    $cpfcnpj;
+    $rgie;
+    $telcontato;
+    $telresidencial;
+    $celular;
+    $email;
+    $cep;
+    $endereco;
+    $numero;
+    $bairro;
+    $cidade;
+    $uf;
+    $complemento;
+    
     if (isset($_POST['cadastrar']))
     {
         $nome = $_POST['nome'];
@@ -42,16 +38,21 @@
         $uf = $_POST['uf'];
         $complemento = $_POST['complemento'];
         
-        $insert = "insert into cadastro ('nome','dtnasc','tipopessoa','cpfcnpj','rgie','telcontato','telresidencial','celular','email','cep','endereco','numero','bairro','cidade','uf','complemento') values ('$nome','$dtnasc','$tipopessoa','$cpfcnpj','$rgie','$telcontato','$telresidencial','$celular','$email','$cep','$endereco','$numero','$bairro','$cidade','$uf','$complemento');";
+        $insert = "insert into cadastro (nome,dtnasc,tipopessoa,cpfcnpj,rgie,telcontato,telresidencial,celular,email,cep,endereco,numero,bairro,cidade,uf,complemento) values ('$nome','$dtnasc','$tipopessoa','$cpfcnpj','$rgie','$telcontato','$telresidencial','$celular','$email','$cep','$endereco','$numero','$bairro','$cidade','$uf','$complemento')";
         $result = mysqli_query($conn, $insert);        
+ 
+        echo "<br><br>Status: $result";
 
+        if(mysqli_affected_rows($conn)){
+
+        }
         if($result){
             echo '<scrip> alert("Novo registro inserido com sucesso!"); </script>';
             header('Location: index.html');
         }else{
-            echo '<scrip> alert("Não foi possivel registrar no banco de dados!"); </script>';
+            echo '<script> alert("Não foi possivel registrar no banco de dados!"); </script>';
         }
-
+    }
         /* if($conn->query($insert) === true){
             $_SESSION['status_cadastro'] = true;
         }else{
@@ -59,14 +60,13 @@
         }
 
         echo $result; */
-    }
+    /* } */
     /* 
     if (isset($_POST['update'])){
 
     } */
+   
 
-    $conn->close(); /* Fecha conexao */
-
-    header('Location: index.php');
-    exit;
+    /* header('Location: index.html'); */
+    /* exit; */
 ?>
