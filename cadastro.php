@@ -1,72 +1,53 @@
 <?php
     /* session_start(); */
-    include_once('server.php');/* Inicia a conexão com o servidor */   
+    require_once('server.php');/* Inicia a conexão com o servidor */   
+    
+    $status;
+    $msg_resposta;    
 
-    $nome;
-    $dtnasc;
-    $tipopessoa;
-    $cpfcnpj;
-    $rgie;
-    $telcontato;
-    $telresidencial;
-    $celular;
-    $email;
-    $cep;
-    $endereco;
-    $numero;
-    $bairro;
-    $cidade;
-    $uf;
-    $complemento;
+    function limpaTexto($string){
+        return preg_replace("/[^0-9]/", "", $string);
+    }
     
     if (isset($_POST['cadastrar']))
     {
-        $nome = $_POST['nome'];
-        $dtnasc = $_POST['dtnasc'];
-        $tipopessoa = $_POST['cboPessoa'];
-        $cpfcnpj = $_POST['cpfcnpj'];
-        $rgie = $_POST['rgie'];
-        $telcontato = $_POST['telcontato'];
-        $telresidencial = $_POST['telres'];
-        $celular = $_POST['celular'];
-        $email = $_POST['email'];
-        $cep = $_POST['cep'];
-        $endereco = $_POST['rua'];
-        $numero = $_POST['numero'];
-        $bairro = $_POST['bairro'];
-        $cidade = $_POST['cidade'];
-        $uf = $_POST['uf'];
-        $complemento = $_POST['complemento'];
+        $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
+        $dtnasc = isset($_POST['dtnasc']) ? $_POST['dtnasc'] : '';
+        $tipopessoa = isset($_POST['cboPessoa']) ? $_POST['cboPessoa'] : '';
+        $cpfcnpj = isset($_POST['cpfcnpj']) ? $_POST['cpfcnpj'] : '';
+        $rgie = isset($_POST['rgie']) ? $_POST['rgie'] : '';
+        $telcontato = isset($_POST['telcontato']) ? $_POST['telcontato'] : '';
+        $telres = isset($_POST['telres']) ? limpaTexto($_POST['telres']) : '';
+        $celular = isset($_POST['celular']) ? limpaTexto($_POST['celular']) : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $cep = isset($_POST['cep']) ? $_POST['cep'] : '';
+        $endereco = isset($_POST['rua']) ? $_POST['rua'] : '';
+        $numero = isset($_POST['numero']) ? $_POST['numero'] : '';
+        $bairro = isset($_POST['bairro']) ? $_POST['bairro'] : '';
+        $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '';
+        $uf = isset($_POST['uf']) ? $_POST['uf'] : '';
+        $complemento = isset($_POST['complemento']) ? $_POST['complemento'] : '';
         
-        $insert = "insert into cadastro (nome,dtnasc,tipopessoa,cpfcnpj,rgie,telcontato,telresidencial,celular,email,cep,endereco,numero,bairro,cidade,uf,complemento) values ('$nome','$dtnasc','$tipopessoa','$cpfcnpj','$rgie','$telcontato','$telresidencial','$celular','$email','$cep','$endereco','$numero','$bairro','$cidade','$uf','$complemento')";
-        $result = mysqli_query($conn, $insert);        
- 
-        echo "<br><br>Status: $result";
+        $insert = "insert into cadastro (nome,dtnasc,tipopessoa,cpfcnpj,rgie,telcontato,telresidencial,celular,email,cep,endereco,numero,bairro,cidade,uf,complemento) values ('$nome','$dtnasc','$tipopessoa','$cpfcnpj','$rgie','$telcontato','$telres','$celular','$email','$cep','$endereco','$numero','$bairro','$cidade','$uf','$complemento')";
+        $result = mysqli_query($conn, $insert);   
 
-        if(mysqli_affected_rows($conn)){
-
-        }
         if($result){
-            echo '<scrip> alert("Novo registro inserido com sucesso!"); </script>';
-            header('Location: index.html');
+            $status = "success";
+            $msg_resposta = "Registro cadastrado com sucesso!";
+            //echo "Registro cadastrado com sucesso!";
         }else{
-            echo '<script> alert("Não foi possivel registrar no banco de dados!"); </script>';
+            $status = "error";
+            $msg_resposta = "Erro no processo de cadastramento. Tente novamente.";
+            //echo "Erro ao cadastrar!";
         }
+        
+        $dados_retorno = array(
+            'msg' => $msg_resposta,
+            'status' => $status,
+        );
+        
+        header("content-type: application/json");
+        
+        echo json_encode($dados_retorno);
     }
-        /* if($conn->query($insert) === true){
-            $_SESSION['status_cadastro'] = true;
-        }else{
-            $_SESSION['status_cadastro'] = false;
-        }
-
-        echo $result; */
-    /* } */
-    /* 
-    if (isset($_POST['update'])){
-
-    } */
-   
-
-    /* header('Location: index.html'); */
-    /* exit; */
 ?>

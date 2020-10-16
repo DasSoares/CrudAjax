@@ -13,14 +13,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="LimparCampos.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
+    <script type="text/javascript" src="index.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
     <script type="text/javascript" src="mascaras.js"></script>
 
     <!-- SweetAlert2, alerta javascript top -->
     <link rel="stylesheet" href="node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
     <script src="node_modules/sweetalert2/dist/sweetalert2.js"></script>
 
-	  <title>Cadastro</title>
+    <link rel="shortcut icon" href="icons8_news.ico" type="image/x-icon"/>
+    <title>Cadastro</title>
 </head>
 <body>
 
@@ -41,10 +42,25 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 			</div>
+      <form method="POST" action="cadastro.php" id='form-contato' enctype='multipart/form-data'>
 			<div class="modal-body">
-          <form method="post" action="cadastro.php" id='form-contato' enctype='multipart/form-data'>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                  <label>Código</label>
+                  <input type="text" class="form-control" id="idcadastro" maxlength="7" name="idcadastro" disabled>
+                </div>
+              </div>
+              <div class="col-md">
+                  <div class="form-group">
+                    <label for=""></label>
+                    <div class="" id="mensagem" role="alert"></div>
+                  </div>
+              </div>
+            </div>
+
             <div class="row">
-              <div class="col-md-9"> <!-- col-md-2 é a quantidade de colunas -->
+              <div class="col-md-9"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
                   <div class="form-group">
                   <label>Nome</label>
                   <input type="text" class="form-control" id="nome" maxlength="70" name="nome" autofocus="true" placeholder="Nome Completo" autocomplete="off">
@@ -53,7 +69,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Data Nasc</label>
-                  <input type="date" class="form-control" id="dtnasc" name="dtnasc" style="width: 170px;" required>
+                  <input type="date" class="form-control" id="dtnasc" name="dtnasc" pattern="dd-mm-yyyy" style="width: 170px;" required>
                 </div>
               </div>
             </div>	
@@ -63,16 +79,16 @@
                 <div class="form-group">
                   <label for="cboPessoa">Pessoa</label>
                     <select class="form-control" id="cboPessoa" onchange="mudarCpfCnpj(this.value)" name='cboPessoa'>
-                      <option id="cboPessoa-item" value="0"></option>
-                      <option id="cboPessoa-item" value="1">PF</option>
-                      <option id="cboPessoa-item" value="2">PJ</option>                      
+                      <option id="cboPessoa-item" value=""></option>
+                      <option id="cboPessoa-item" value="PF">PF</option>
+                      <option id="cboPessoa-item" value="PJ">PJ</option>                      
                     </select>                  
                 </div>
               </div>
 
               <script type="text/javascript">
                 function mudarCpfCnpj(val){
-                  if(val == 1 ){
+                  if(val == 'PF' ){
                     document.getElementById('mudarCpfCnpj').label = "CPF";
                     document.getElementById('mudaRGIE').label = "RG";
 
@@ -81,7 +97,7 @@
                     
                     $("#cpfcnpj").inputmask({mask: ["###.###.###-##",],keepStatic: true});
                     $("#rgie").inputmask({mask: ["",],keepStatic: true});
-                  }else if (val == 2) {
+                  }else if (val == 'PJ') {
                     document.getElementById('mudarCpfCnpj').label = "CNPJ";
                     document.getElementById('mudaRGIE').label = "IE (Inscrição Estadual)";
 
@@ -159,7 +175,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <label>Endereço <span class="obrigatorio" data-toggle="tooltip" title="Campo obrigatório">*</span> <span id='mensagem'></span></label>                    
+                  <label>Endereço <span class="obrigatorio">*</span></label>                    
                   <input type="text" class="form-control" id="rua" name="rua" placeholder="Informe a Rua, Logradouro, Travessa" autocomplete="off">
                 </div>
               </div>
@@ -197,15 +213,77 @@
                 </div>
               </div>
             </div>
-          </form>
-
+            
           </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn" data-dismiss="modal" style="color: red;">Cancelar</button>
-              <button type="button" class="btn btn-warning" name="Novo" onclick="LimparCamposEnder();">Novo</button>              
-              <!-- <button type="submit" class="btn btn-primary" value="cadastrar" name="cadastrar" onclick="valida_form();">Cadastrar</button> -->
-              <input type="submit" value="Cadastrar" name="cadastrar" class="btn btn-primary" onclick="valida_form();">
+          <div class="modal-footer">
+            <!-- <span id='mensagem'></span> -->
+            <label for="texto">
+              <optgroup id="texto" data-toggle="tooltip" title="Clique para copiar" label="Danilo Carlos Soares"></optgroup>     
+            </label>
+            <!-- <a id="texto" data-toggle="Copiar texto" href="Danilo Carlos Soares">Danilo Carlos Soares</a>     --> 
+            <style>
+			      #texto {
+				        transition: opacity 0.9s;
+                font-weight: 500; 
+                font-style: normal;
+				        opacity: 0.9
+            }
+			  
+            #texto:hover {
+                transition: opacity 1s;
+                opacity: 1;
+                /* background-color: #83C0EF; */
+                color: #4367A7;                  
+                font-weight: 900; 
+                cursor: pointer; /* copy */
+            }
+            </style>       
+            <script type="text/javascript">
+            /* Função para copiar texto do optgroup */
+            $('#texto').click(function(e){ 
+              e.preventDefault();
+
+                try
+                {
+                  var texto = $('#texto').attr('label');
+
+                  document.addEventListener('copy', function(e){
+                    e.clipboardData.setData('text/plain', texto);
+                    e.preventDefault();
+                  }, true);
+                  
+                  document.execCommand('copy');
+                  /* alert('texto copiado' + texto); */
+                  
+                  if (true)
+                  {
+                    Swal.fire({position: 'top-end', icon: 'success', title: 'Texto copiado para a área de transferência', showConfirmButton: false, timer: 2500});
+                  }
+                } catch (e) {
+                  Swal.fire('Atenção',e.message,'error');
+                } 
+               }); 
+
+               window.onload = function(){
+                 const cadastrar = document.getElementById('cadastrar');
+
+                 cadastrar.addEventListener('onclick', function(e){
+                  e.preventDefault();
+                   
+                  });
+                  
+                  cadastrar.onclick = function(){
+                      return valida_form();
+                  }
+                }
+
+            </script>
+
+            <button type="button" class="btn btn" data-dismiss="modal" style="color: red;">Cancelar</button>
+            <button type="button" class="btn btn-warning" name="Novo" onclick="LimparCamposEnder();">Novo</button>              
+            <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
           </div>             
+        </form>
 		</div>
 		</div>
   </div>
@@ -213,6 +291,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
   <script type="text/javascript" src="cep.js"></script> <!-- Chama a função do JavaScript CEP -->
-  <script type="text/javascript" src="LimparCampos.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
+  <script type="text/javascript" src="index.js"></script> <!-- Chama a função do JavaScript LimparCamposEnder -->
+  <script type="text/javascript" src="mascaras.js"></script>
 </body>
 </html>

@@ -16,29 +16,54 @@ $(document).ready(function () {
         }
     });    
 
-     // Insere máscaras
-     /* Funciona tranquilo */
-    $("#cep").inputmask({mask: ["#####-###",],keepStatic: true});
-    $("#telres").inputmask({mask: '## ####-####',keepStatic: true});    
-    $("#celular").inputmask({mask: '## # ####-####',keepStatic: true});
-
      // Método para consultar o CEP
-    $('#cep').on('blur', function(){
-
+     $('#cep').on('blur', function(){        
+        //Limpamos os campos quando mudar o CEP
+        document.getElementById('rua').value = "";
+        document.getElementById('numero').value = "";
+        document.getElementById('bairro').value = "";
+        document.getElementById('cidade').value = "";
+        document.getElementById('uf').value = "";
+        document.getElementById('complemento').value = "";
+        
         if($.trim($("#cep").val()) != ""){
+            
+            $('#mensagem').addClass('alert alert-primary');            
+            $('#mensagem').fadeIn().html('Aguarde, consultando CEP ...');
 
-            $("#mensagem").html('(Aguarde, consultando CEP ...)');
-            $.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+$("#cep").val(), function(){
-
-                  if(resultadoCEP["resultado"]){
+            $.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+$("#cep").val(), function()
+            {
+                if(resultadoCEP["resultado"] == '1')
+                {
+                    $('#mensagem').removeClass('alert alert-danger'); /* Removemos a classe anterior  */
+                    $('#mensagem').addClass('alert alert-primary'); /* Depois adicionamos a nova classe */       
                     $("#rua").val(unescape(resultadoCEP["tipo_logradouro"])+" "+unescape(resultadoCEP["logradouro"]));
                     $("#bairro").val(unescape(resultadoCEP["bairro"]));
                     $("#cidade").val(unescape(resultadoCEP["cidade"]));
                     $("#uf").val(unescape(resultadoCEP["uf"]));
-                }
+                } 
+                else if (resultadoCEP["resultado"] == '0') 
+                {
+                    $('#mensagem').removeClass('alert alert-primary');  /* Removemos a classe anterior  */
+                    $('#mensagem').addClass('alert alert-danger'); /* Depois adicionamos a nova classe */
+                    $("#mensagem").html('O endereço do CEP não foi encontrado');
+                }                
 
-                $("#mensagem").html('');
-            });				
+                if(resultadoCEP['resultado'] == '1')
+                {
+                    setTimeout(function(){
+                        $('#mensagem').fadeOut('Slow');
+                    },100);                    
+                } 
+                else if (resultadoCEP['resultado'] == '0') 
+                {
+                    setTimeout(function(){
+                        $('#mensagem').fadeOut('Slow');
+                    },5000); 
+                }
+            });
+
+            /* $('#mensagem').addClass('alert alert-primary'); */
         }			
     });
 });	

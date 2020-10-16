@@ -6,6 +6,7 @@
 body {
     text-align: center;
     padding: 1em;
+    background-color: #e2e3e5;
 }
 
 .container{
@@ -15,7 +16,7 @@ body {
 #exampleModal{
     /* Alinha o texto ou conteúdo dentro do modal, caso nao colocar isso, ele segue o padrão do body */
     /* Se o alinhamento do body estiver centralizado, o modal ficará centralizado */
-    text-align: left;
+    text-align: left;    
 }
 
 .obrigatorio{ /* se colocar o span ele pega o x do fechar o modal também */
@@ -24,4 +25,15 @@ body {
 
 #cep:focus{
     -moz-user-focus: true;
+}
+
+#mensagem {
+    font-size: 12px;
+}
+label {
+    font-size: 12px;
+}
+
+input {
+    font-size: 12px;
 }

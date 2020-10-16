@@ -1,2 +1,7 @@
-/* $('#telefone').mask('00 0000-0000');
-$('#celular').mask('00 0 0000-0000'); */
+
+window.onload = function () {
+
+    $("#cep").inputmask({mask: ["#####-###",],keepStatic: true});
+    $("#telres").inputmask({mask: '## ####-####',keepStatic: true});    
+    $("#celular").inputmask({mask: '## # ####-####',keepStatic: true});
+};
