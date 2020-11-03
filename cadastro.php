@@ -1,12 +1,26 @@
 <?php
     /* session_start(); */
     require_once('server.php');/* Inicia a conexão com o servidor */   
-    
-    $status;
+
+    $resultado = $conn->query('select * from cadastro');
+        
     $msg_resposta;    
 
     function limpaTexto($string){
         return preg_replace("/[^0-9]/", "", $string);
+    }
+
+    function Mask($mask, $str){
+        /* Adiciona a Mascara para o campo desejado */
+        if(strlen($str) > 0){            
+            $str = str_replace(" ","",$str);
+            
+            for($i=0;$i<strlen($str);$i++){
+                $mask[strpos($mask,"#")] = $str[$i];
+            }
+            
+            return $mask;
+        }
     }
     
     if (isset($_POST['cadastrar']))
@@ -32,22 +46,37 @@
         $result = mysqli_query($conn, $insert);   
 
         if($result){
-            $status = "success";
             $msg_resposta = "Registro cadastrado com sucesso!";
-            //echo "Registro cadastrado com sucesso!";
-        }else{
-            $status = "error";
+        }else{            
             $msg_resposta = "Erro no processo de cadastramento. Tente novamente.";
-            //echo "Erro ao cadastrar!";
         }
         
-        $dados_retorno = array(
-            'msg' => $msg_resposta,
-            'status' => $status,
-        );
+        /* $dados_retorno = array(
+            'status' => $status
+        ); */
         
-        header("content-type: application/json");
+        /* header("content-type: application/json"); */
         
-        echo json_encode($dados_retorno);
+       /*  echo json_encode($dados_retorno); */
+       echo $msg_resposta;
     }
+
+    if(isset($GET['del']))
+    {   
+        $idcadastro = $_GET['del'];
+             
+        mysqli_query($conn, "delete from cadastro where idcadastro=$idcadastro");
+        echo "alert('Registro deletado com sucesso!')";
+        $_SESSION['msg'] = "Registro deletado com sucesso!";
+        header('location: index.php');
+    }
+
+    /* //Delete record
+    if (isset($_GET['del'])){
+        $idcadastro = $_GET['del'];
+
+        mysqli_query($db, "delete from cadastro where idcadastro=$idcadastro");
+        $_SESSION['msg'] = "Record Deleted!";
+        header('location: ../index.php');
+    } */
 ?>

@@ -89,8 +89,8 @@
               <script type="text/javascript">
                 function mudarCpfCnpj(val){
                   if(val == 'PF' ){
-                    document.getElementById('mudarCpfCnpj').label = "CPF";
-                    document.getElementById('mudaRGIE').label = "RG";
+                    document.getElementById('mudarCpfCnpj').innerHTML = "CPF";
+                    document.getElementById('mudaRGIE').innerHTML = "RG";
 
                     $('#cpfcnpj').attr({placeholder: "Insira o CPF", maxlenght: "14"}); /* 000.000.000-00 */
                     $('#rgie').attr({placeholder: "Insira o RG", maxlenght: "13"}); /* Ex: 00.000.000-0 ou -X */
@@ -98,8 +98,8 @@
                     $("#cpfcnpj").inputmask({mask: ["###.###.###-##",],keepStatic: true});
                     $("#rgie").inputmask({mask: ["",],keepStatic: true});
                   }else if (val == 'PJ') {
-                    document.getElementById('mudarCpfCnpj').label = "CNPJ";
-                    document.getElementById('mudaRGIE').label = "IE (Inscrição Estadual)";
+                    document.getElementById('mudarCpfCnpj').innerHTML = "CNPJ";
+                    document.getElementById('mudaRGIE').innerHTML = "IE (Inscrição Estadual)";
 
                     $('#cpfcnpj').attr({placeholder: "Insira o CNPJ", maxlenght: "18"}); /* Ex: 38.388.388/0000-00 */
                     $('#rgie').attr({placeholder: "Insira a Inscrição Estadual", maxlenght: "15"}); /* Ex: 388.108.598.269 */
@@ -118,18 +118,16 @@
             
               <div class="col-md-3">
                 <div class="form-group">
-                  <label> <!-- ao inserir o optgroup deve adicionar a tag label e dentro dela colocar a tag optgroup, ele dará uma desconfigurada mas é só mudar o style -->
-                    <optgroup id="mudarCpfCnpj" label="CPF" style="font-weight: 400; font-style: normal;"> <!-- tem que utilizar o optgroup para fazer a label moduar o seu conteúdo -->
-                  </label>
+                  <label id="mudarCpfCnpj">CPF</label>
+                    <!-- <optgroup id="mudarCpfCnpj" label="CPF" style="font-weight: 400; font-style: normal;"></optgroup>  -->
                     <input type="text" class="form-control" id="cpfcnpj" name="cpfcnpj" placeholder="" autocomplete="off" style="margin-top: -1px;">
                 </div>
               </div>
 
               <div class="col-md-3">
                 <div class="form-group">
-                  <label>
-                    <optgroup id="mudaRGIE" label="RG" style="font-weight: 400; font-style: normal;"></optgroup>
-                  </label>
+                  <label id="mudaRGIE">RG</label>
+                    <!-- <optgroup id="mudaRGIE" label="RG" style="font-weight: 400; font-style: normal;"></optgroup> -->
                   <input type="text" class="form-control" id="rgie" name="rgie" placeholder="" autocomplete="off" style="margin-top: -1px;">
                 </div>
               </div>
@@ -217,10 +215,8 @@
           </div>
           <div class="modal-footer">
             <!-- <span id='mensagem'></span> -->
-            <label for="texto">
-              <optgroup id="texto" data-toggle="tooltip" title="Clique para copiar" label="Danilo Carlos Soares"></optgroup>     
-            </label>
-            <!-- <a id="texto" data-toggle="Copiar texto" href="Danilo Carlos Soares">Danilo Carlos Soares</a>     --> 
+            <label id="texto">Danilo Carlos Soares</label>
+            <!-- <optgroup id="texto" data-toggle="tooltip" title="Clique para copiar" label="Danilo Carlos Soares"></optgroup>-->            
             <style>
 			      #texto {
 				        transition: opacity 0.9s;
@@ -245,48 +241,74 @@
 
                 try
                 {
-                  var texto = $('#texto').attr('label');
+                  var texto = $('#texto').html();
 
                   document.addEventListener('copy', function(e){
                     e.clipboardData.setData('text/plain', texto);
                     e.preventDefault();
                   }, true);
                   
-                  document.execCommand('copy');
+                  /* var bCopiar = document.execCommand('copy'); */
                   /* alert('texto copiado' + texto); */
+                  var bCopiar = navigator.clipboard.writeText(texto);
                   
-                  if (true)
+                  if (bCopiar)
                   {
                     Swal.fire({position: 'top-end', icon: 'success', title: 'Texto copiado para a área de transferência', showConfirmButton: false, timer: 2500});
+                  } else {
+                    Swal.fire('Atenção','Este navegador não tem suporte para copiar' + e.message,'error');  
                   }
                 } catch (e) {
                   Swal.fire('Atenção',e.message,'error');
                 } 
                }); 
-
-               window.onload = function(){
-                 const cadastrar = document.getElementById('cadastrar');
-
-                 cadastrar.addEventListener('onclick', function(e){
-                  e.preventDefault();
-                   
-                  });
-                  
-                  cadastrar.onclick = function(){
-                      return valida_form();
-                  }
-                }
-
             </script>
 
             <button type="button" class="btn btn" data-dismiss="modal" style="color: red;">Cancelar</button>
             <button type="button" class="btn btn-warning" name="Novo" onclick="LimparCamposEnder();">Novo</button>              
-            <button type="submit" class="btn btn-primary" name="cadastrar">Cadastrar</button>
+            <button type="submit" class="btn btn-primary" id="cadastrar" onclick="return valida_form();" name="cadastrar">Cadastrar</button> 
           </div>             
         </form>
 		</div>
 		</div>
   </div>
+
+  <br><br>
+  <!-- Tabela -->
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" style="width: 5%; text-align: left;">Código</th>
+        <th scope="col" style="width: 32,5%; text-align: left;">Nome</th>
+        <th scope="col" style="width: 32,5%; text-align: left;">Endereço</th>
+        <th scope="col" style="width: 20%; text-align: left;">Celular</th>
+        <th scope="col" colspan="2" style="width: 10%; text-align: left;">Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <?php 
+        include('cadastro.php');  
+        while($row = mysqli_fetch_array($resultado)) { 
+      ?>    
+          
+        <tr>
+          <th style="text-align: center;"><?php echo $row['idcadastro']; ?></th>
+          <td style="text-align: left;"><?php echo $row['nome']; ?></td>
+          <td style="text-align: left;"><?php echo $row['endereco']; ?></td>
+          <td style="text-align: left;"><?php echo Mask('(##) #####-####', $row['celular']); ?></td>
+          <td>
+            <a class="btn btn-warning" href="index.php?edit=<?php echo $row['idcadastro']; ?>">Edit</a>
+          </td>
+          <td>
+            
+            <a class="btn btn-danger" href="cadastro.php?del=<?php echo $row['idcadastro']; ?>">Deletar</a>
+          </td>
+        </tr>
+      <?php } ?>
+
+    </tbody>
+  </table>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
