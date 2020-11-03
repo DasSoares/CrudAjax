@@ -66,36 +66,39 @@ function GetBrowserInfo() {
 }
 
 function valida_form(){    
-    var bPodecadastrar = false;
+    var bPodecadastrar = true;
 
     if (document.getElementById('nome').value.length < 1) 
     {
         document.getElementById('nome').focus();
         Swal.fire('Atenção','O campo nome não pode ficar vázio!', 'warning');
         bPodecadastrar = false;
-        return 0;
+        return false;
     }
     else if(document.getElementById('cboPessoa').value < 1)
     {
         document.getElementById('cboPessoa').focus();
         Swal.fire('Atenção','Por favor, selecione o tipo pessoa!','warning');
-        return 0;
+        bPodecadastrar = false;
+        return false;
     }
     else if(document.getElementById('cep').value.length < 1)
     {
         var msg = 'Por favor, insira o cep!';
-        /* O foco no campo será aplicado depois de apertar o botão OK, se colocar o focus() depois da msg ele, focará primeiro e 
-        depois o campo perde o focus() */
         document.getElementById('cep').focus();
         Swal.fire('Atenção',msg, 'info');
-        return 0;
-    }
-
-    if(!valida_form){
+        bPodecadastrar = false;
         return false;
     }
-                
-    NovoRegistro();
+
+    /* if(!bPodecadastrar){
+        return false;
+    } */
+    
+    if (bPodecadastrar){
+        NovoRegistro();        
+    }
+
 }
 
 function NovoRegistro(){
@@ -115,15 +118,15 @@ function NovoRegistro(){
         'bairro': document.getElementById('bairro').value,
         'cidade': document.getElementById('cidade').value,
         'uf': document.getElementById('uf').value,
-        'complemento': document.getElementById('complemento').value,
-        'cadastrar' : document.getElementById('cadastrar')
+        'complemento': document.getElementById('complemento').value
         };
-    
+        
         $.ajax({
             url: 'cadastro.php',
             method: 'POST',
             dataType: 'json',
             data: dados,
+            key: document.getElementById('cadastrar'),
             beforeSend: function(){
                 /* exibe msg carregando antes de gravar */
                 $('#alertmsg').HTMLElement("carregando...");

@@ -41,6 +41,7 @@ $(document).ready(function () {
                     $("#bairro").val(unescape(resultadoCEP["bairro"]));
                     $("#cidade").val(unescape(resultadoCEP["cidade"]));
                     $("#uf").val(unescape(resultadoCEP["uf"]));
+                    $('#numero').focus();
                 } 
                 else if (resultadoCEP["resultado"] == '0') 
                 {

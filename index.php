@@ -62,14 +62,14 @@
             <div class="row">
               <div class="col-md-9"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
                   <div class="form-group">
-                  <label>Nome</label>
+                  <label>Nome <span class="obrigatorio">*</span></label>
                   <input type="text" class="form-control" id="nome" maxlength="70" name="nome" autofocus="true" placeholder="Nome Completo" autocomplete="off">
                 </div>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Data Nasc</label>
-                  <input type="date" class="form-control" id="dtnasc" name="dtnasc" pattern="dd-mm-yyyy" style="width: 170px;" required>
+                  <input type="date" class="form-control" id="dtnasc" name="dtnasc" pattern="dd-mm-yyyy" style="width: 170px;">
                 </div>
               </div>
             </div>	
@@ -77,7 +77,7 @@
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
-                  <label for="cboPessoa">Pessoa</label>
+                  <label for="cboPessoa">Pessoa <span class="obrigatorio">*</span></label>
                     <select class="form-control" id="cboPessoa" onchange="mudarCpfCnpj(this.value)" name='cboPessoa'>
                       <option id="cboPessoa-item" value=""></option>
                       <option id="cboPessoa-item" value="PF">PF</option>
@@ -167,13 +167,13 @@
             <div class="row">
               <div class="col-md-2"> <!-- col-md-2 é o comprimento do campo, se colocar 3 ele aumenta um pouco -->
                   <div class="form-group">
-                  <label>CEP</label>
+                  <label>CEP <span class="obrigatorio">*</span></label>
                   <input type="text" class="form-control" id="cep" maxlength="9" name="cep" autofocus="true" placeholder="CEP" autocomplete="off">
                 </div>
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <label>Endereço <span class="obrigatorio">*</span></label>                    
+                  <label>Endereço</label>                    
                   <input type="text" class="form-control" id="rua" name="rua" placeholder="Informe a Rua, Logradouro, Travessa" autocomplete="off">
                 </div>
               </div>
@@ -279,8 +279,8 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col" style="width: 5%; text-align: left;">Código</th>
-        <th scope="col" style="width: 32,5%; text-align: left;">Nome</th>
-        <th scope="col" style="width: 32,5%; text-align: left;">Endereço</th>
+        <th scope="col" style="text-align: left;">Nome</th>
+        <th scope="col" style="text-align: left;">Endereço</th>
         <th scope="col" style="width: 20%; text-align: left;">Celular</th>
         <th scope="col" colspan="2" style="width: 10%; text-align: left;">Opções</th>
       </tr>
@@ -293,12 +293,12 @@
       ?>    
           
         <tr>
-          <th style="text-align: center;"><?php echo $row['idcadastro']; ?></th>
+          <td style="text-align: center;"><?php echo $row['idcadastro']; ?></td>
           <td style="text-align: left;"><?php echo $row['nome']; ?></td>
           <td style="text-align: left;"><?php echo $row['endereco']; ?></td>
           <td style="text-align: left;"><?php echo Mask('(##) #####-####', $row['celular']); ?></td>
           <td>
-            <a class="btn btn-warning" href="index.php?edit=<?php echo $row['idcadastro']; ?>">Edit</a>
+            <a class="btn btn-warning" href="index.php?edit=<?php echo $row['idcadastro']; ?>">Editar</a>
           </td>
           <td>
             

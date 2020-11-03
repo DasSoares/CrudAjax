@@ -21,6 +21,9 @@ body {
 
 .obrigatorio{ /* se colocar o span ele pega o x do fechar o modal também */
     color: red;
+   /*  position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; */
 }
 
 #cep:focus{
@@ -37,3 +40,4 @@ label {
 input {
     font-size: 12px;
 }
+

@@ -25,6 +25,7 @@
     
     if (isset($_POST['cadastrar']))
     {
+        
         $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
         $dtnasc = isset($_POST['dtnasc']) ? $_POST['dtnasc'] : '';
         $tipopessoa = isset($_POST['cboPessoa']) ? $_POST['cboPessoa'] : '';
@@ -58,25 +59,19 @@
         /* header("content-type: application/json"); */
         
        /*  echo json_encode($dados_retorno); */
-       echo $msg_resposta;
+       echo "<script>
+                alert(".$msg_resposta.");
+            </script>";
     }
 
-    if(isset($GET['del']))
+    if(isset($_GET['del']))
     {   
         $idcadastro = $_GET['del'];
              
         mysqli_query($conn, "delete from cadastro where idcadastro=$idcadastro");
-        echo "alert('Registro deletado com sucesso!')";
-        $_SESSION['msg'] = "Registro deletado com sucesso!";
-        header('location: index.php');
+        //$_SESSION['msg'] = "Registro deletado com sucesso!";
+        echo "<script type='text/javascript'> alert('Registro deletado com sucesso!') </script>";
+        /* header('location: index.php'); */
     }
-
-    /* //Delete record
-    if (isset($_GET['del'])){
-        $idcadastro = $_GET['del'];
-
-        mysqli_query($db, "delete from cadastro where idcadastro=$idcadastro");
-        $_SESSION['msg'] = "Record Deleted!";
-        header('location: ../index.php');
-    } */
+    
 ?>
