@@ -61,7 +61,7 @@
        echo $msg_resposta;
     }
 
-    if(isset($GET['del']))
+    if(isset($_GET['del']))
     {   
         $idcadastro = $_GET['del'];
              
