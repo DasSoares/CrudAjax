@@ -164,6 +164,8 @@
             }
             echo json_encode($arr);
         }
+        
+        mysqli_close($conn); //Fecha conexão
     }
 
     
@@ -201,5 +203,7 @@
                 echo json_encode($arr);
             }
         }
+        
+        mysqli_close($conn); //Fecha conexão
     }
 ?>
