@@ -1,0 +1,47 @@
+
+/* Add Buttons */
+.add {
+    border: 1px;
+    border-radius:  5px;
+    background: rgb(0, 116, 194);
+    padding: 10px 10px 10px 10px;
+    color: whitesmoke;
+    transition: 0.3s;
+}  
+
+.add:hover{
+    background: rgb(77, 140, 199);
+    color: whitesmoke;
+    transition: 0.6s;
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
+}
+
+.add:disabled {
+    background: rgb(212, 212, 212);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2);
+}
+
+/* End Add Buttons */
+
+/* New Buttons */
+.newbutton {
+    border: 1px;
+    border-radius:  5px;
+    background: rgb(223, 200, 0);
+    padding: 10px 10px 10px 10px;
+    color: black;
+    transition: 0.3s;
+}  
+
+.newbutton:hover{
+    background: rgb(255, 230, 0);
+    color: black;
+    transition: 0.6s;
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.2);
+}
+
+.newbutton:disabled {
+    background: rgb(212, 212, 212);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.2);
+}
+/* End nNew Buttons */

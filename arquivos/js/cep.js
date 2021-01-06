@@ -47,7 +47,7 @@ $(document).ready(function () {
                 {
                     $('#mensagem').removeClass('alert alert-primary');  /* Removemos a classe anterior  */
                     $('#mensagem').addClass('alert alert-danger'); /* Depois adicionamos a nova classe */
-                    $("#mensagem").html('O endereço do CEP não foi encontrado');
+                    $("#mensagem").html('CEP não encontrado ou não existe');
                 }                
 
                 if(resultadoCEP['resultado'] == '1')
